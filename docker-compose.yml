@@ -1,0 +1,9 @@
+version: '3'
+services:
+  reddit-watcher:
+    image: imdevinc/reddit-watcher
+    restart: always
+    environment:
+      - PRAW_CLIENT_SECRET=${PRAW_CLIENT_SECRET}
+      - PRAW_CLIENT_ID=${PRAW_CLIENT_ID}
+      - DISCORD_WEBHOOK=${DISCORD_WEBHOOK}
