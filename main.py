@@ -2,9 +2,11 @@ import os
 import logging
 import requests
 import praw
+import json
 
 
 def notify_channel(submission):
+    logger = logging.getLogger('RedditWatcher')
     payload = {
         'embeds': [
             {
@@ -28,7 +30,11 @@ def notify_channel(submission):
     }
     url = os.getenv('DISCORD_WEBHOOK')
     resp = requests.post(url, json=payload)
-    resp.raise_for_status()
+    try:
+        resp.raise_for_status()
+    except Exception as ex:
+        logger.error(ex)
+        logger.error(json.dumps(payload))
 
 
 def main():
