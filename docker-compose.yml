@@ -1,4 +1,4 @@
-version: '3'
+version: '2'
 services:
   reddit-watcher:
     image: imdevinc/reddit-watcher

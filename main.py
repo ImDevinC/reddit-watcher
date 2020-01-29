@@ -32,15 +32,22 @@ def notify_channel(submission):
 
 
 def main():
-    logger = logging.getLogger()
+    handler = logging.StreamHandler()
+    formatter = logging.Formatter(
+        '{"timestamp": "%(asctime)s", "level": "%(levelname)s", "message": "%(message)s"}')
+    handler.setFormatter(formatter)
+
+    logger = logging.getLogger('RedditWatcher')
+    logger.addHandler(handler)
     logger.setLevel(logging.INFO)
+
     while True:
         try:
             logger.info('Starting RedditWatcher')
             reddit = praw.Reddit(client_id=os.getenv('PRAW_CLIENT_ID'), client_secret=os.getenv(
                 'PRAW_CLIENT_SECRET'), user_agent='RedditWatcher/1.0')
             for submission in reddit.subreddit('all').stream.submissions():
-                if 'malwarebytes' in submission.selftext.lower() or 'malwarebytes' in submission.title:
+                if 'malwarebytes' in submission.selftext.lower() or 'malwarebytes' in submission.title.lower():
                     notify_channel(submission)
         except Exception as ex:
             logger.error(ex)
