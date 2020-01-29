@@ -1,0 +1,1 @@
+A simple Reddit bot to monitor for references of Malwarebytes in the title or body of a post and notify a discord channel.
