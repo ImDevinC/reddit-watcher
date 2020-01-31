@@ -10,7 +10,7 @@ def notify_channel(submission):
     payload = {
         'embeds': [
             {
-                'title': submission.title,
+                'title': submission.title if len(submission.title) < 256 else '%s...' % (submission.title[:253]),
                 'type': 'rich',
                 'url': '%s%s' % ('https://reddit.com', submission.permalink),
                 'fields': [
